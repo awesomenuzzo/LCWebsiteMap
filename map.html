@@ -20,51 +20,10 @@
        
 	</style>
     </head>
+    <script src="map.js"></script>
     <body>
 	    <div id="map"></div>
-       
-	<script>
-		const map = L.map('map').setView([45.464682, -122.671632], 15); // set the map center to Lewis & Clark College's location
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        // Add a marker for Lewis & Clark College
-        L.marker([45.464682, -122.671632]).addTo(map)
-            .bindPopup('<b>Lewis & Clark College</b><br>A liberal arts college in Portland, Oregon.')
-            .openPopup();
-
-        // Add a marker for the user's location
-        let userLocationMarker;
-
-        map.locate({setView: true, maxZoom:30}) 
-
-        function onLocationFound(e) {
-            const radius = e.accuracy / 2;
-
-            if (userLocationMarker) {
-                map.removeLayer(userLocationMarker);
-            }
-
-            userLocationMarker = L.marker(e.latlng).addTo(map)
-                .bindPopup(`You are within ${radius} meters of this point.`)
-                .openPopup();
-            // allows for larger zoom to user, must be under maxzoom which is set during map.locate
-            map.flyTo(e.latlng, 18);
-        }
-
-        function onLocationError(e) {
-            alert(e.message);
-        }
-
-        map.on('locationfound', onLocationFound);
-        map.on('locationerror', onLocationError);
-
-        // Request the user's location
-        map.locate({ setView: true, maxZoom: 30 });
-	</script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script>loadMap();</script>
 
 </body>
 </html>
