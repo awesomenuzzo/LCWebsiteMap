@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -33,11 +34,27 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        // Setup for the button
         binding.buttonFirst.setOnClickListener(v ->
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment)
         );
+
+        // Initialize the MapView
+        MapView mapView = new MapView(requireContext());
+        // Configure your MapView if needed, e.g., setting dimensions, enabling features, etc.
+
+        // Add MapView to the FrameLayout
+        FrameLayout mapContainer = binding.mapContainer;
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        );
+        mapView.setLayoutParams(layoutParams);
+        mapContainer.addView(mapView);
+
+        // If you need to interact with mapView after adding it, do so here.
+        // For example, mapView.setSomeProperty(value);
     }
 
     @Override
