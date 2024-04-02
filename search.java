@@ -123,7 +123,7 @@ public class search {
 
     }
 
-    public static Node searchNode(String name, String fileName){
+    public static Node searchNode(String name, String fileName, String nodesFileName){
         HashMap<String, Location.Room> dict = RoomCache.fetchDict(fileName);
         Location.Room l = dict.get(name);
         return NodeCache.findNode(l.getNodeID());
@@ -139,7 +139,7 @@ public class search {
 
         ArrayList<String> result = search("troom", "src/fowlMap/fowlerNames.tsv");
         for (String s:result) {
-            Node r = searchNode(s, "src/fowlMap/fowlerNames.tsv");
+            Node r = searchNode(s, "src/fowlMap/fowlerNames.tsv", "src/fowlMap/officialnodes.csv");
             System.out.println(r.toStringAll());
         }
 //

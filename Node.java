@@ -3,6 +3,7 @@ package fowlMap;
 import edu.princeton.cs.algs4.*;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,14 +16,14 @@ import static java.lang.Math.sqrt;
 
 public class Node {
     int nodeID;
-    Point position;
+    java.awt.geom.Point2D position;
     ArrayList<Node> neighbors;
     HashMap<Node, Double> weights;
     ArrayList<DirectedEdge> edges;
 
-    Node(int nodeID, int x, int y){
+    Node(int nodeID, double x, double y){
         this.nodeID = nodeID;
-        this.position = new Point(x, y);
+        this.position.setLocation(x,y);
         this.neighbors = new ArrayList<Node>();
         this.weights = new HashMap<>();
     }
@@ -49,7 +50,7 @@ public class Node {
         }
     }
 
-    public Point getPosition(){
+    public Point2D getPosition(){
         return this.position;
     }
 
@@ -81,7 +82,7 @@ public class Node {
             while ((line = br.readLine()) != null)   //returns a Boolean value
             {
                 String[] row = line.split(splitBy);
-                Node n = new Node(Integer.parseInt(row[0]), Integer.parseInt(row[1]), Integer.parseInt(row[2]));
+                Node n = new Node(Integer.parseInt(row[0]), Double.parseDouble(row[1]), Double.parseDouble(row[2]));
                 if(!nodes.containsKey(n.nodeID)){
                     nodes.put(n.nodeID, n);
                 }
