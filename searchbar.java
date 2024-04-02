@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -71,7 +72,7 @@ public class searchbar implements ActionListener {
         return b;
     }
 
-    public void drawIcon(Point a, BufferedImage j){
+    public void drawIcon(Point2D a, BufferedImage j){
         int x = (int)a.getX();
         int y = (int) a.getY();
         int r = 10;
@@ -157,10 +158,10 @@ public class searchbar implements ActionListener {
         }//fowler map
     }
 
-    public Point scalePoints(Point a, double scaleFactor){
-        int x = (int) (a.getX()*scaleFactor);
-        int y = (int) (a.getY()*scaleFactor);
-        Point b = new Point(x,y);
+    public Point2D scalePoints(Point2D a, double scaleFactor){
+
+        Point2D b = new Point2D.Double();
+        b.setLocation(a.getX()*scaleFactor, a.getY()*scaleFactor);
         return b;
     }
 
@@ -200,7 +201,7 @@ public class searchbar implements ActionListener {
             String locationSelected = b1.getText();
             MapPanel m = new MapPanel();
             Node n = search.searchNode(locationSelected , "src/fowlMap/fowlerNames.tsv");
-            Point a = scalePoints(n.position, m.scaleFactor);
+            Point2D a = scalePoints(n.position, m.scaleFactor);
             drawIcon(a, m.mapImage);
             System.out.println(a.getX() + " " + a.getY());
 
