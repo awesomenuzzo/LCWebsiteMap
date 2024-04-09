@@ -1,5 +1,7 @@
 package fowlMap;
 
+import org.imgscalr.Scalr;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -83,46 +85,6 @@ public class searchbar implements ActionListener {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //terminates on closing window
 
-//
-/*
-//        // Initialize and set bounds for the buttons used for suggestions
-//        b1 = new JButton("Suggestion 1");
-//        b1.setBounds(50, 100, 300, 30);
-//        b1.addActionListener(this);
-//        frame.add(b1);
-//
-//        b2 = new JButton("Suggestion 2");
-//        b2.setBounds(50, 140, 300, 30);
-//        b2.addActionListener(this);
-//        frame.add(b2);
-//
-//        b3 = new JButton("Suggestion 3");
-//        b3.setBounds(50, 180, 300, 30);
-//        b3.addActionListener(this);
-//        frame.add(b3);
-//
-//        b4 = new JButton("Suggestion 4");
-//        b4.setBounds(50, 220, 300, 30);
-//        b4.addActionListener(this);
-//        frame.add(b4);
-//
-//        b5 = new JButton("Suggestion 5");
-//        b5.setBounds(50, 260, 300, 30);
-//        b5.addActionListener(this);
-//        frame.add(b5);
-//
-//        // Search Button
-//        submitButton = new JButton("Search");
-//        submitButton.setBounds(360, 60, 100, 30);
-//        submitButton.addActionListener(this);
-//        frame.add(submitButton);
-//
-//        // Frame adjustments
-//        frame.setSize(500, 400);
-//        frame.setVisible(true);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //terminates on closing window
-*/
-
     }//setting buttons and textbar
 
     public static String SearchQuery(){
@@ -153,19 +115,20 @@ public class searchbar implements ActionListener {
 
     }
 
-    public class MapPanel extends JPanel{
+    public class MapPanel extends JPanel implements ActionListener {
 
         public BufferedImage mapImage;
         double scaleFactor;
         public BufferedImage mapIn(){
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             int maxWidth = (int) (screenSize.getWidth() * 0.8); // 80% of screen width
-            int maxHeight = (int) (screenSize.getHeight() *1);
+            int maxHeight = (int) (screenSize.getHeight() * 0.9);
             int width, height, newWidth, newHeight;
             double widthRatio, heightRatio;
             BufferedImage originalImage;
-            BufferedImage m;
+            Image m;
             try {
+//                m = ImageIO.read(new File("Fowler2_cropped.jpg"));
                 originalImage = ImageIO.read(new File("Fowler2_cropped.jpg"));
                 width = originalImage.getWidth();
                 height = originalImage.getHeight();
@@ -174,12 +137,15 @@ public class searchbar implements ActionListener {
                 scaleFactor = Math.min(widthRatio, heightRatio);
                 newWidth = (int) (width * scaleFactor);
                 newHeight = (int) (height * scaleFactor);
-                m = org.imgscalr.Scalr.resize(originalImage, org.imgscalr.Scalr.Method.BALANCED, newWidth, newHeight);
-
+                m = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+//                m = org.imgscalr.Scalr.resize(originalImage, Scalr.Method.ULTRA_QUALITY, newWidth, newHeight);
             } catch (IOException a) {
                 throw new RuntimeException(a);
             }
-            return m;
+
+            BufferedImage returnImage;
+            returnImage = toBufferedImage(m, newWidth, newHeight, false);
+            return returnImage;
         }
 
         public MapPanel() {
@@ -221,11 +187,39 @@ public class searchbar implements ActionListener {
             mapFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
             mapFrame.add(mapPanel);
             mapFrame.pack();
+
+            // Add a description button
+            JButton descriptionButton = new JButton("Room Description");
+            descriptionButton.setBounds(50, 160, 100, 40);
+            descriptionButton.addActionListener(this);
+            descriptionButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
+            mapFrame.add(descriptionButton);
+
             mapFrame.setVisible(true);
 
 
         }//fowler map
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
     }
+
+    public BufferedImage toBufferedImage(Image img, int width, int height, boolean hasAlpha) {
+        // Create a buffered image with transparency
+        int type = hasAlpha ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
+        BufferedImage bimage = new BufferedImage(width, height, type);
+
+        // Draw the image on to the buffered image
+        Graphics2D bGraphics = bimage.createGraphics();
+        bGraphics.drawImage(img, 0, 0, width, height, null);
+        bGraphics.dispose();
+
+        // Return the buffered image
+        return bimage;
+    }
+
 
     public Point2D scalePoints(Point2D a, double scaleFactor){
 
