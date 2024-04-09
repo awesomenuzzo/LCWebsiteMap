@@ -115,7 +115,7 @@ public class searchbar implements ActionListener {
 
     }
 
-    public class MapPanel extends JPanel implements ActionListener {
+    public class MapPanel extends JFrame implements ActionListener {
 
         public BufferedImage mapImage;
         double scaleFactor;
@@ -150,60 +150,87 @@ public class searchbar implements ActionListener {
 
         public MapPanel() {
             JPanel mapPanel = new JPanel();
+            this.setTitle("Map Frame");
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.setLayout(new BorderLayout()); // Set the JFrame layout
 
-            mapPanel.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                printPosition(e);
+            mapPanel.setLayout(new BorderLayout()); // Use BorderLayout for the map panel
 
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-
-                }
-            });
-
-            mapImage = mapIn();
+            mapImage = mapIn(); // Assume this method exists
             JLabel mapLabel = new JLabel(new ImageIcon(mapImage));
-            mapPanel.add(mapLabel);
-            JFrame.setDefaultLookAndFeelDecorated(true);
-            JFrame mapFrame = new JFrame();
-            mapFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-            mapFrame.add(mapPanel);
-            mapFrame.pack();
+            mapPanel.add(mapLabel, BorderLayout.CENTER); // Add the map label to the center
 
-            // Add a description button
             JButton descriptionButton = new JButton("Room Description");
-            descriptionButton.setBounds(50, 160, 100, 40);
             descriptionButton.addActionListener(this);
             descriptionButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
-            mapFrame.add(descriptionButton);
 
-            mapFrame.setVisible(true);
+            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+            buttonPanel.add(descriptionButton);
 
+            this.add(mapPanel, BorderLayout.CENTER); // Add map panel to the center of the frame
+            this.add(buttonPanel, BorderLayout.NORTH); // Add button panel to the top (north) of the frame
 
-        }//fowler map
+            this.pack();
+            this.setVisible(true);
+        }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            // Handle button click event
         }
+
+
+//        public MapPanel() {
+//            JPanel mapPanel = new JPanel();
+//
+//            mapPanel.addMouseListener(new MouseListener() {
+//                @Override
+//                public void mouseClicked(MouseEvent e) {
+//                printPosition(e);
+//
+//                }
+//
+//                @Override
+//                public void mousePressed(MouseEvent e) {
+//
+//                }
+//
+//                @Override
+//                public void mouseReleased(MouseEvent e) {
+//
+//                }
+//
+//                @Override
+//                public void mouseEntered(MouseEvent e) {
+//
+//                }
+//
+//                @Override
+//                public void mouseExited(MouseEvent e) {
+//
+//                }
+//            });
+//
+//            mapImage = mapIn();
+//            JLabel mapLabel = new JLabel(new ImageIcon(mapImage));
+//            mapPanel.add(mapLabel);
+//            JFrame.setDefaultLookAndFeelDecorated(true);
+//            JFrame mapFrame = new JFrame();
+//            mapFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//            mapFrame.add(mapPanel);
+//            mapFrame.pack();
+//
+//            // Add a description button
+//            JButton descriptionButton = new JButton("Room Description");
+//            descriptionButton.setBounds(50, 160, 100, 40);
+//            descriptionButton.addActionListener(this);
+//            descriptionButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
+//            mapFrame.add(descriptionButton);
+//
+//            mapFrame.setVisible(true);
+//
+//
+//        }//fowler map
     }
 
     public BufferedImage toBufferedImage(Image img, int width, int height, boolean hasAlpha) {
