@@ -3,6 +3,7 @@ package fowlMap;
 import edu.princeton.cs.algs4.*;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,14 +16,15 @@ import static java.lang.Math.sqrt;
 
 public class Node {
     int nodeID;
-    Point position;
+    java.awt.geom.Point2D position;
     ArrayList<Node> neighbors;
     HashMap<Node, Double> weights;
     ArrayList<DirectedEdge> edges;
 
-    Node(int nodeID, int x, int y){
+    Node(int nodeID, double x, double y){
         this.nodeID = nodeID;
-        this.position = new Point(x, y);
+        this.position = new Point2D.Double();
+        this.position.setLocation(x,y);
         this.neighbors = new ArrayList<Node>();
         this.weights = new HashMap<>();
     }
@@ -49,7 +51,7 @@ public class Node {
         }
     }
 
-    public Point getPosition(){
+    public Point2D getPosition(){
         return this.position;
     }
 
@@ -81,7 +83,7 @@ public class Node {
             while ((line = br.readLine()) != null)   //returns a Boolean value
             {
                 String[] row = line.split(splitBy);
-                Node n = new Node(Integer.parseInt(row[0]), Integer.parseInt(row[1]), Integer.parseInt(row[2]));
+                Node n = new Node(Integer.parseInt(row[0]), Double.parseDouble(row[1]), Double.parseDouble(row[2]));
                 if(!nodes.containsKey(n.nodeID)){
                     nodes.put(n.nodeID, n);
                 }
@@ -128,6 +130,7 @@ public class Node {
         }
 
         return graph;
+
     }
 
     public static DijkstraSP getDijkstra(EdgeWeightedDigraph G, int start){
@@ -139,19 +142,20 @@ public class Node {
         }
     }
 
-    public static Iterable<DirectedEdge> dijkstraSearch(EdgeWeightedDigraph G, int start, int end){
-        DijkstraSP d = getDijkstra(G, start);
-        if(d.hasPathTo(end)){
+    public static Iterable<DirectedEdge> dijkstraSearch(HashMap<Integer, Node> nodes, int start, int end){
+        EdgeWeightedDigraph G = generateGraph(nodes);
+        DijkstraSP d = new DijkstraSP(G, start);
+//        if(d.hasPathTo(end)){
             return d.pathTo(end);
-        }
-        else return null;
+//        }
+//        else return null;
     }
 
     public static void main(String[] args) {
-        HashMap<Integer, Node> nodes = generateNodes("src/fowlMap/nodes.csv");
+        HashMap<Integer, Node> nodes = generateNodes("src/fowlMap/officialnodes.csv");
         EdgeWeightedDigraph graph = generateGraph(nodes);
-        Iterable<DirectedEdge> d = dijkstraSearch(graph, 1, 3);
-        System.out.println(d.toString());
+//        Iterable<DirectedEdge> d = dijkstraSearch(graph, 14, 34);
+//        System.out.println(d.toString());
 
 //        for (Map.Entry<Integer, Node> entry: nodes.entrySet()){
 //            Node n = entry.getValue();
