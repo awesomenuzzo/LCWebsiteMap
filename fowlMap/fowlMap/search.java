@@ -151,7 +151,7 @@ public class search {
     //test with pre-existing string
     public static void main(String[] args){
 
-        ArrayList<String> result = search("bathroom" , "src/fowlMap/fowlerNames4.tsv");
+        ArrayList<String> result = search("bathroom" , "LC Interactive Map Database.tsv");
         for (String s:result) {
 //            Node r = searchNode(s, "src/fowlMap/fowlerNames1.tsv", "src/fowlMap/officialnodes.csv");
 //            System.out.println(r.toStringAll());

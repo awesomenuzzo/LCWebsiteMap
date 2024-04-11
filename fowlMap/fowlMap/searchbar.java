@@ -21,7 +21,7 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 public class searchbar implements ActionListener {
     String NODES_PATH = "officialnodes.csv";
     String NAMES_PATH = "LC Interactive Map Database.tsv";
-    String[] IMAGE_PATHS = {"", "Fowler2_cropped.jpg", ""};
+    String[] IMAGE_PATHS = {"", "Fowler2_cropped.jpg", "Fowler3_cropped.jpg"};
     //  building search bar
     static JTextField t0;
 //  building buttons
@@ -127,6 +127,9 @@ public class searchbar implements ActionListener {
         double scaleFactor;
         double w0;
         double h0;
+        private JButton descriptionButton;
+        private JButton floorUpButton;
+        private JButton floorDownButton;
         HashMap<Integer, Node> nodes;
         public BufferedImage mapIn(int floorNumber){
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -167,19 +170,19 @@ public class searchbar implements ActionListener {
 
             mapPanel.setLayout(new BorderLayout()); // Use BorderLayout for the map panel
 
-            mapImage = mapIn(1);
+            mapImage = mapIn(2);
             nodes = Node.generateNodes(NODES_PATH);            JLabel mapLabel = new JLabel(new ImageIcon(mapImage));
             mapPanel.add(mapLabel, BorderLayout.CENTER); // Add the map label to the center
 
-            JButton descriptionButton = new JButton("Room Description");
+            descriptionButton = new JButton("Room Description");
             descriptionButton.addActionListener(this);
             descriptionButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
 
-            JButton floorUpButton = new JButton("Floor Up");
+            floorUpButton = new JButton("Floor Up");
             floorUpButton.addActionListener(this);
             floorUpButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
 
-            JButton floorDownButton = new JButton("Floor Down");
+            floorDownButton = new JButton("Floor Down");
             floorDownButton.addActionListener(this);
             floorDownButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
 
@@ -195,9 +198,30 @@ public class searchbar implements ActionListener {
             this.setVisible(true);
         }
 
-        @Override
         public void actionPerformed(ActionEvent e) {
-            // Handle button click event
+            if (e.getSource() == descriptionButton) {
+                showRoomDescription();
+            } else if (e.getSource() == floorUpButton) {
+                navigateFloorUp();
+            } else if (e.getSource() == floorDownButton) {
+                navigateFloorDown();
+            }
+        }
+
+        private void showRoomDescription() {
+            // Implement the logic to show room descriptions
+            String roomDescription = "hi";
+            JOptionPane.showMessageDialog(this, "Room Description Here");
+        }
+
+        private void navigateFloorUp() {
+            // Implement logic for navigating up a floor
+            JOptionPane.showMessageDialog(this, "Navigating to upper floor");
+        }
+
+        private void navigateFloorDown() {
+            // Implement logic for navigating down a floor
+            JOptionPane.showMessageDialog(this, "Navigating to lower floor");
         }
     }
 
