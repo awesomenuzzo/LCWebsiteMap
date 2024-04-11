@@ -175,13 +175,18 @@ public class searchbar implements ActionListener {
             descriptionButton.addActionListener(this);
             descriptionButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
 
-            JButton toggleFloorButton = new JButton("Toggle Floor");
-            toggleFloorButton.addActionListener(this);
-            toggleFloorButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
+            JButton floorUpButton = new JButton("Floor Up");
+            floorUpButton.addActionListener(this);
+            floorUpButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
+
+            JButton floorDownButton = new JButton("Floor Down");
+            floorDownButton.addActionListener(this);
+            floorDownButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
 
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
             buttonPanel.add(descriptionButton);
-            buttonPanel.add(toggleFloorButton);
+            buttonPanel.add(floorUpButton);
+            buttonPanel.add(floorDownButton);
 
             this.add(mapPanel, BorderLayout.CENTER); // Add map panel to the center of the frame
             this.add(buttonPanel, BorderLayout.NORTH); // Add button panel to the top (north) of the frame
