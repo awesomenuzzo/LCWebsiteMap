@@ -2,9 +2,7 @@ package fowlMap;
 
 import edu.princeton.cs.algs4.*;
 
-import java.lang.reflect.Array;
 import java.util.*;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,9 +23,15 @@ public class search {
             {
 
                 String[] row = line.split(splitBy);
-                String[] list = row[3].split("\\|");
+                int rownum = 0;
+//                for (String s:row) {
+//                    System.out.println(rownum + " " +s);
+//
+//                }
+//                rownum++;
+                String[] list = row[4].split("\\|");
 
-                Location.Room room = new Location.Room(row[1], row[0], Integer.parseInt(row[2]), Integer.parseInt(row[6]));
+                Location.Room room = new Location.Room(row[1], row[0], Integer.parseInt(row[3]), Integer.parseInt(row[2]));
 //                System.out.println(room.getRoomNumber());
                 for (String s: list) {
                     s = s.toLowerCase(Locale.ROOT);
@@ -90,17 +94,25 @@ public class search {
     }
 
     public static ArrayList<String> search(String query, String filePath){
-        HashMap dict = RoomCache.fetchDict(filePath);
-        TrieSET data = TrieFactory.fetchTrie(dict);
+        HashMap<String, Location.Room> dict = fileIn(filePath);
+        TrieSET data = load_data(dict);
         query = query.toLowerCase();
         Iterable<String> prefixes = data.keysWithPrefix(query);
-        ArrayList<String> result = transformIterable(prefixes);
+        ArrayList<String> array_prefixes = transformIterable(prefixes);
+        ArrayList<String> result = new ArrayList<>();
         Iterator<String> interior = data.iterator();
         for (Iterator<String> it = interior; it.hasNext(); ) {
             String s = it.next();
-            if(s.contains(query)){
-                if(!result.contains(s)) {
-                    result.add(s);
+            Location.Room r = dict.get(s);
+            String display_name = r.getName();
+//            System.out.println(s);
+            if((s.contains(query)) && !result.contains(display_name)){
+                result.add(display_name);
+            }else {
+                if (s.contains(query)) {
+                    if (!result.contains(display_name)) {
+                        result.add(display_name);
+                    }
                 }
             }
         }
@@ -116,7 +128,8 @@ public class search {
     }
 
     public static class NodeCache {
-        public static HashMap<Integer, Node> nodes = Node.generateNodes("src/fowlMap/officialnodes.csv");
+        public static HashMap<Integer, Node> nodes;
+        public static void makeNodes(String nodesFileName){ nodes = Node.generateNodes(nodesFileName);}
         public static Node findNode(int nodeID) {
             return nodes.get(nodeID);
         }
@@ -124,8 +137,9 @@ public class search {
     }
 
     public static Node searchNode(String name, String fileName, String nodesFileName){
-        HashMap<String, Location.Room> dict = RoomCache.fetchDict(fileName);
-        Location.Room l = dict.get(name);
+        HashMap<String, Location.Room> dict = fileIn(fileName);
+        Location.Room l = dict.get(name.toLowerCase(Locale.ROOT));
+        NodeCache.makeNodes(nodesFileName);
         return NodeCache.findNode(l.getNodeID());
     }
 
@@ -137,10 +151,11 @@ public class search {
     //test with pre-existing string
     public static void main(String[] args){
 
-        ArrayList<String> result = search("troom", "src/fowlMap/fowlerNames.tsv");
+        ArrayList<String> result = search("bathroom" , "src/fowlMap/fowlerNames4.tsv");
         for (String s:result) {
-            Node r = searchNode(s, "src/fowlMap/fowlerNames.tsv", "src/fowlMap/officialnodes.csv");
-            System.out.println(r.toStringAll());
+//            Node r = searchNode(s, "src/fowlMap/fowlerNames1.tsv", "src/fowlMap/officialnodes.csv");
+//            System.out.println(r.toStringAll());
+            System.out.println(s);
         }
 //
 
