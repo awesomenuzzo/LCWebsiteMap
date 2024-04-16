@@ -252,13 +252,15 @@ public class searchbar implements ActionListener {
 
     public void drawPath(Iterable<DirectedEdge> path, MapPanel m){
         for (DirectedEdge e:path) {
-            Graphics g2 = m.mapImage.createGraphics();
+            Graphics2D g2 = m.mapImage.createGraphics();
             g2.setColor(Color.red);
             Node n1 = m.nodes.get(e.from());
             Point2D p1 = scalePoints(n1.getPosition(), m.scaleFactor, m.w0, m.h0, m.mapImage);
             Node n2 = m.nodes.get(e.to());
             Point2D p2 = scalePoints(n2.getPosition(), m.scaleFactor, m.w0, m.h0, m.mapImage);
 //            g2.setStroke(new BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.setStroke(new BasicStroke(6));
+
             g2.drawLine((int)Math.round(p1.getX()),(int)Math.round(p1.getY()), (int)Math.round(p2.getX()), (int)Math.round(p2.getY()));
 
         }
