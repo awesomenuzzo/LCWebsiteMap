@@ -143,15 +143,33 @@ public class search {
         return NodeCache.findNode(l.getNodeID());
     }
 
-    public static Integer getFloorNumber(String query, String filePath){
+    public static Integer getFloorNumber(int query, String filePath){
         HashMap<String, Location.Room> dict = RoomCache.fetchDict(filePath);
         return dict.get(query).getFloorNumber();
+    }
+
+
+    public static Integer getFloorNumberByNodeId(int nodeId, String filePath) {
+        HashMap<Integer, Integer> nodeToFloor = new HashMap<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                int currentNodeId = Integer.parseInt(values[0]);  // Node ID is in the first column
+                int floorNumber = Integer.parseInt(values[4]);   // Floor number is in the fifth column
+                nodeToFloor.put(currentNodeId, floorNumber);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null; // Handle exceptions or invalid file path
+        }
+        return nodeToFloor.get(nodeId);
     }
 
     //test with pre-existing string
     public static void main(String[] args){
 
-        ArrayList<String> result = search("bathroom" , "src/fowlMap/fowlerNames4.tsv");
+        ArrayList<String> result = search("bathroom" , "src/fowlMap/fowlerNames5.tsv");
         for (String s:result) {
 //            Node r = searchNode(s, "src/fowlMap/fowlerNames1.tsv", "src/fowlMap/officialnodes.csv");
 //            System.out.println(r.toStringAll());

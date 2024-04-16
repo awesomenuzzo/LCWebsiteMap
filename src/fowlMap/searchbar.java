@@ -233,18 +233,17 @@ public class searchbar implements ActionListener {
         }
 
         private void navigateFloor1() {
-            // Implement logic for navigating up a floor
             MapPanel m = new MapPanel(0);
-            drawPath(path, m);
+            drawPath(path, m, 0);
         }
 
         private void navigateFloor2() {
-            // Implement logic for navigating down a floor
-            JOptionPane.showMessageDialog(this, "Navigating to lower floor");
+            MapPanel m = new MapPanel(1);
+            drawPath(path, m, 1);
         }
         private void navigateFloor3() {
-            // Implement logic for navigating down a floor
-            JOptionPane.showMessageDialog(this, "Navigating to lower floor");
+            MapPanel m = new MapPanel(2);
+            drawPath(path, m, 2);
         }
     }
 
@@ -273,7 +272,7 @@ public class searchbar implements ActionListener {
         return b;
     }
 
-    public void drawPath(Iterable<DirectedEdge> path, MapPanel m){
+    public void drawPath(Iterable<DirectedEdge> path, MapPanel m, int floor){
         for (DirectedEdge e:path) {
             Graphics2D g2 = m.mapImage.createGraphics();
             g2.setColor(Color.red);
@@ -283,9 +282,10 @@ public class searchbar implements ActionListener {
             Point2D p2 = scalePoints(n2.getPosition(), m.scaleFactor, m.w0, m.h0, m.mapImage);
 //            g2.setStroke(new BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setStroke(new BasicStroke(6));
-
-            g2.drawLine((int)Math.round(p1.getX()),(int)Math.round(p1.getY()), (int)Math.round(p2.getX()), (int)Math.round(p2.getY()));
-
+            if (search.getFloorNumberByNodeId(e.to(), NODES_PATH) == floor + 1 && search.getFloorNumberByNodeId(e.from(), NODES_PATH) == floor + 1) {
+                g2.drawLine((int) Math.round(p1.getX()), (int) Math.round(p1.getY()), (int) Math.round(p2.getX()), (int) Math.round(p2.getY()));
+            }
+//            g2.drawLine((int) Math.round(p1.getX()), (int) Math.round(p1.getY()), (int) Math.round(p2.getX()), (int) Math.round(p2.getY()));
         }
     }
 
@@ -323,7 +323,7 @@ public class searchbar implements ActionListener {
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
-            drawPath(path, m);
+            drawPath(path, m, floorNumber);
         }
 
         if (e.getSource() == b2) {
@@ -336,7 +336,7 @@ public class searchbar implements ActionListener {
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
-            drawPath(path, m);
+            drawPath(path, m, floorNumber);
 
         }
 
@@ -350,7 +350,7 @@ public class searchbar implements ActionListener {
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
-            drawPath(path, m);
+            drawPath(path, m, floorNumber);
         }
 
         if (e.getSource() == b4) {
@@ -363,7 +363,7 @@ public class searchbar implements ActionListener {
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
-            drawPath(path, m);
+            drawPath(path, m, floorNumber);
         }
 
         if (e.getSource() == b5) {
@@ -376,10 +376,8 @@ public class searchbar implements ActionListener {
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
-            drawPath(path, m);
+            drawPath(path, m, floorNumber);
         }
-
-
 
     }
 
