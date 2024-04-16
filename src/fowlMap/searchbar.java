@@ -19,11 +19,15 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 
 public class searchbar implements ActionListener {
-    String NODES_PATH = "officialnodes.csv";
+    String NODES_PATH = "src/fowlMap/official nodes.csv";
     String NAMES_PATH = "src/fowlMap/fowlerNames5.tsv";
     String[] IMAGE_PATHS = {"", "src/fowlMap/Fowler2_cropped.jpg", "src/fowlMap/Fowler3_cropped.jpg"};
     //  building search bar
     static JTextField t0;
+
+    Iterable<DirectedEdge> path;
+
+
     //  building buttons
     JButton submitButton;JButton b1;JButton b2;JButton b3;JButton b4;JButton b5;
     searchbar() {
@@ -128,9 +132,12 @@ public class searchbar implements ActionListener {
         double w0;
         double h0;
         private JButton descriptionButton;
-        private JButton floorUpButton;
-        private JButton floorDownButton;
+        private JButton floor1Button;
+        private JButton floor2Button;
+        private JButton floor3Button;
+
         HashMap<Integer, Node> nodes;
+
         public BufferedImage mapIn(int floorNumber){
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             int maxWidth = (int) (screenSize.getWidth() * 0.8); // 80% of screen width
@@ -162,7 +169,7 @@ public class searchbar implements ActionListener {
             return returnImage;
         }
 
-        public MapPanel() {
+        public MapPanel(int floorNumber) {
             JPanel mapPanel = new JPanel();
             this.setTitle("Map Frame");
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -170,26 +177,34 @@ public class searchbar implements ActionListener {
 
             mapPanel.setLayout(new BorderLayout()); // Use BorderLayout for the map panel
 
-            mapImage = mapIn(2);
-            nodes = Node.generateNodes(NODES_PATH);            JLabel mapLabel = new JLabel(new ImageIcon(mapImage));
+            mapImage = mapIn(floorNumber);
+            nodes = Node.generateNodes(NODES_PATH);
+            JLabel mapLabel = new JLabel(new ImageIcon(mapImage));
             mapPanel.add(mapLabel, BorderLayout.CENTER); // Add the map label to the center
 
             descriptionButton = new JButton("Room Description");
             descriptionButton.addActionListener(this);
             descriptionButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
 
-            floorUpButton = new JButton("Floor Up");
-            floorUpButton.addActionListener(this);
-            floorUpButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
+            floor1Button = new JButton("Floor One");
+            floor1Button.addActionListener(this);
+            floor1Button.setFont(new Font("Sans Serif", Font.PLAIN, 16));
 
-            floorDownButton = new JButton("Floor Down");
-            floorDownButton.addActionListener(this);
-            floorDownButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
+            floor2Button = new JButton("Floor Two");
+            floor2Button.addActionListener(this);
+            floor2Button.setFont(new Font("Sans Serif", Font.PLAIN, 16));
+
+            floor3Button = new JButton("Floor Three");
+            floor3Button.addActionListener(this);
+            floor3Button.setFont(new Font("Sans Serif", Font.PLAIN, 16));
+
 
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
             buttonPanel.add(descriptionButton);
-            buttonPanel.add(floorUpButton);
-            buttonPanel.add(floorDownButton);
+            buttonPanel.add(floor1Button);
+            buttonPanel.add(floor2Button);
+            buttonPanel.add(floor3Button);
+
 
             this.add(mapPanel, BorderLayout.CENTER); // Add map panel to the center of the frame
             this.add(buttonPanel, BorderLayout.NORTH); // Add button panel to the top (north) of the frame
@@ -201,12 +216,15 @@ public class searchbar implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == descriptionButton) {
                 showRoomDescription();
-            } else if (e.getSource() == floorUpButton) {
-                navigateFloorUp();
-            } else if (e.getSource() == floorDownButton) {
-                navigateFloorDown();
+            } else if (e.getSource() == floor1Button) {
+                navigateFloor1();
+            } else if (e.getSource() == floor2Button) {
+                navigateFloor2();
+            } else if (e.getSource() == floor3Button) {
+                navigateFloor3();
             }
-        }
+
+    }
 
         private void showRoomDescription() {
             // Implement the logic to show room descriptions
@@ -214,12 +232,17 @@ public class searchbar implements ActionListener {
             JOptionPane.showMessageDialog(this, "Room Description Here");
         }
 
-        private void navigateFloorUp() {
+        private void navigateFloor1() {
             // Implement logic for navigating up a floor
-            JOptionPane.showMessageDialog(this, "Navigating to upper floor");
+            MapPanel m = new MapPanel(0);
+            drawPath(path, m);
         }
 
-        private void navigateFloorDown() {
+        private void navigateFloor2() {
+            // Implement logic for navigating down a floor
+            JOptionPane.showMessageDialog(this, "Navigating to lower floor");
+        }
+        private void navigateFloor3() {
             // Implement logic for navigating down a floor
             JOptionPane.showMessageDialog(this, "Navigating to lower floor");
         }
@@ -271,6 +294,8 @@ public class searchbar implements ActionListener {
         String s1 = t0.getText();
         ArrayList<String> results = new ArrayList<String>();
         results = search.search(s1, NAMES_PATH);
+        int floorNumber = 1;
+
         //if we click the search button
         if (e.getSource() == submitButton) {
             // emptying old results
@@ -288,62 +313,66 @@ public class searchbar implements ActionListener {
             b5.setText(results.get(4));
         }
 
-
-//
         if (e.getSource() == b1){
             String locationSelected = b1.getText();
-            MapPanel m = new MapPanel();
+            MapPanel m = new MapPanel(floorNumber);
             Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
             Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
-            Iterable<DirectedEdge> path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
+            path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
             drawPath(path, m);
         }
+
         if (e.getSource() == b2) {
             String locationSelected = b2.getText();
-            MapPanel m = new MapPanel();
+            MapPanel m = new MapPanel(floorNumber);
             Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
             Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
-            Iterable<DirectedEdge> path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
+            path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
             drawPath(path, m);
 
         }
+
         if (e.getSource() == b3) {
             String locationSelected = b3.getText();
-            MapPanel m = new MapPanel();
-            Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
-            drawIcon(a, m.mapImage);            Iterable<DirectedEdge> path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
-            for (DirectedEdge edge:path) {
-                System.out.println(edge.toString());
-            }
-            drawPath(path, m);
-        }
-        if (e.getSource() == b4) {
-            String locationSelected = b4.getText();
-            MapPanel m = new MapPanel();
-            Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
-            drawIcon(a, m.mapImage);            Iterable<DirectedEdge> path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
-            for (DirectedEdge edge:path) {
-                System.out.println(edge.toString());
-            }
-            drawPath(path, m);
-        }
-        if (e.getSource() == b5) {
-            String locationSelected = b5.getText();
-            MapPanel m = new MapPanel();
+            MapPanel m = new MapPanel(floorNumber);
             Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
             Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
-            Iterable<DirectedEdge> path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
+            path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
+            for (DirectedEdge edge:path) {
+                System.out.println(edge.toString());
+            }
+            drawPath(path, m);
+        }
+
+        if (e.getSource() == b4) {
+            String locationSelected = b4.getText();
+            MapPanel m = new MapPanel(floorNumber);
+            Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
+            drawIcon(a, m.mapImage);
+            path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
+            for (DirectedEdge edge:path) {
+                System.out.println(edge.toString());
+            }
+            drawPath(path, m);
+        }
+
+        if (e.getSource() == b5) {
+            String locationSelected = b5.getText();
+            MapPanel m = new MapPanel(floorNumber);
+            Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
+            drawIcon(a, m.mapImage);
+            path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
