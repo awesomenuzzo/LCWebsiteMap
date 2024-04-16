@@ -20,7 +20,7 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class searchbar implements ActionListener {
     String NODES_PATH = "officialnodes.csv";
-    String NAMES_PATH = "LC Interactive Map Database.tsv";
+    String NAMES_PATH = "src/fowlMap/fowlerNames5.tsv";
     String[] IMAGE_PATHS = {"", "Fowler2_cropped.jpg", "Fowler3_cropped.jpg"};
     //  building search bar
     static JTextField t0;
