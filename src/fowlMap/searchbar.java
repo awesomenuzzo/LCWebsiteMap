@@ -1,6 +1,7 @@
 package fowlMap;
 
 import edu.princeton.cs.algs4.DirectedEdge;
+import org.imgscalr.Scalr;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,15 +15,16 @@ import java.lang.reflect.Array;
 import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 
 public class searchbar implements ActionListener {
-    String NODES_PATH = "src/fowlMap/officialnodes.csv";
-    String NAMES_PATH = "src/fowlMap/fowlerNames5.tsv";
-    String[] IMAGE_PATHS = {"", "src/fowlMap/FowlerSecond.jpg", ""};
+    String NODES_PATH = "officialnodes.csv";
+    String NAMES_PATH = "LC Interactive Map Database.tsv";
+    String[] IMAGE_PATHS = {"", "Fowler2_cropped.jpg", "Fowler3_cropped.jpg"};
     //  building search bar
     static JTextField t0;
-//  building buttons
+    //  building buttons
     JButton submitButton;JButton b1;JButton b2;JButton b3;JButton b4;JButton b5;
     searchbar() {
         JFrame frame = new JFrame("Enhanced Search Interface"); // Title of the window
@@ -87,41 +89,7 @@ public class searchbar implements ActionListener {
 
         // Frame adjustments for visibility
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-//        t0 = new JTextField();
-//        t0.setBounds(50,50,300,20);
-//        b1 = new JButton("");
-//        //b1.setEditable(false);
-//        b1.setBounds(50,70,300,20);
-//        b1.addActionListener(this);
-//        b2 = new JButton("");
-//        //b2.setEditable(false);
-//        b2.setBounds(50,90,300,20);
-//        b2.addActionListener(this);
-//        b3 = new JButton("");
-//        //b3.setEditable(false);
-//        b3.setBounds(50,110,300,20);
-//        b3.addActionListener(this);
-//        b4 = new JButton("");
-//        //t4.setEditable(false);
-//        b4.setBounds(50,130,300,20);
-//        b4.addActionListener(this);
-//        b5 = new JButton("");
-//        b5.setBounds(50,150,300,20);
-//        b5.addActionListener(this);
-//       // t5.setEditable(false);
-//
-//
-//        submitButton = new JButton("Search");
-//        submitButton.setBounds(375,50,100,50);
-//        submitButton.addActionListener(this);
-////      adding buttons and text to frame
-//        frame.add(t0);frame.add(b1);frame.add(b2);frame.add(b3);frame.add(b4);frame.add(b5);frame.add(submitButton);
-//        frame.setSize(500, 500);
-//        frame.setLayout(null);
-//        frame.setVisible(true);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//terminates on closing window
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //terminates on closing window
 
     }//setting buttons and textbar
 
@@ -153,93 +121,129 @@ public class searchbar implements ActionListener {
 
     }
 
-    public class MapPanel extends JPanel{
+    public class MapPanel extends JFrame implements ActionListener {
 
         public BufferedImage mapImage;
         double scaleFactor;
         double w0;
         double h0;
+        private JButton descriptionButton;
+        private JButton floorUpButton;
+        private JButton floorDownButton;
         HashMap<Integer, Node> nodes;
         public BufferedImage mapIn(int floorNumber){
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            int maxWidth = (int) (screenSize.getWidth()); // 80% of screen width
-            int maxHeight = (int) (screenSize.getHeight());
+            int maxWidth = (int) (screenSize.getWidth() * 0.8); // 80% of screen width
+            int maxHeight = (int) (screenSize.getHeight() * 0.9);
             int originalWidth, originalHeight, newWidth, newHeight;
             double widthRatio, heightRatio;
             BufferedImage originalImage;
-            BufferedImage m;
+            Image m;
             try {
+//                m = ImageIO.read(new File("Fowler2_cropped.jpg"));
                 originalImage = ImageIO.read(new File(IMAGE_PATHS[floorNumber]));
                 originalWidth = originalImage.getWidth();
-                w0 = originalWidth;
                 originalHeight = originalImage.getHeight();
+                w0 = originalWidth;
                 h0 = originalHeight;
                 widthRatio = (double) maxWidth / originalWidth;
                 heightRatio = (double) maxHeight / originalHeight;
                 scaleFactor = Math.min(widthRatio, heightRatio);
                 newWidth = (int) (originalWidth * scaleFactor);
                 newHeight = (int) (originalHeight * scaleFactor);
-
-                m = org.imgscalr.Scalr.resize(originalImage, org.imgscalr.Scalr.Method.BALANCED, newWidth, newHeight);
-
-
+                m = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+//                m = org.imgscalr.Scalr.resize(originalImage, Scalr.Method.ULTRA_QUALITY, newWidth, newHeight);
             } catch (IOException a) {
                 throw new RuntimeException(a);
             }
-            return m;
+
+            BufferedImage returnImage;
+            returnImage = toBufferedImage(m, newWidth, newHeight, false);
+            return returnImage;
         }
 
         public MapPanel() {
             JPanel mapPanel = new JPanel();
+            this.setTitle("Map Frame");
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.setLayout(new BorderLayout()); // Set the JFrame layout
 
-            mapPanel.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                printPosition(e);
+            mapPanel.setLayout(new BorderLayout()); // Use BorderLayout for the map panel
 
-                }
+            mapImage = mapIn(2);
+            nodes = Node.generateNodes(NODES_PATH);            JLabel mapLabel = new JLabel(new ImageIcon(mapImage));
+            mapPanel.add(mapLabel, BorderLayout.CENTER); // Add the map label to the center
 
-                @Override
-                public void mousePressed(MouseEvent e) {
+            descriptionButton = new JButton("Room Description");
+            descriptionButton.addActionListener(this);
+            descriptionButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
 
-                }
+            floorUpButton = new JButton("Floor Up");
+            floorUpButton.addActionListener(this);
+            floorUpButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
+            floorDownButton = new JButton("Floor Down");
+            floorDownButton.addActionListener(this);
+            floorDownButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
 
-                }
+            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+            buttonPanel.add(descriptionButton);
+            buttonPanel.add(floorUpButton);
+            buttonPanel.add(floorDownButton);
 
-                @Override
-                public void mouseEntered(MouseEvent e) {
+            this.add(mapPanel, BorderLayout.CENTER); // Add map panel to the center of the frame
+            this.add(buttonPanel, BorderLayout.NORTH); // Add button panel to the top (north) of the frame
 
-                }
+            this.pack();
+            this.setVisible(true);
+        }
 
-                @Override
-                public void mouseExited(MouseEvent e) {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == descriptionButton) {
+                showRoomDescription();
+            } else if (e.getSource() == floorUpButton) {
+                navigateFloorUp();
+            } else if (e.getSource() == floorDownButton) {
+                navigateFloorDown();
+            }
+        }
 
-                }
-            });
+        private void showRoomDescription() {
+            // Implement the logic to show room descriptions
+            String roomDescription = "hi";
+            JOptionPane.showMessageDialog(this, "Room Description Here");
+        }
 
-            mapImage = mapIn(1);
-            nodes = Node.generateNodes(NODES_PATH);
-            JLabel mapLabel = new JLabel(new ImageIcon(mapImage));
-            mapPanel.add(mapLabel);
-            JFrame.setDefaultLookAndFeelDecorated(true);
-            JFrame mapFrame = new JFrame();
-            mapFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            mapFrame.add(mapPanel);
-            mapFrame.pack();
-            mapFrame.setVisible(true);
+        private void navigateFloorUp() {
+            // Implement logic for navigating up a floor
+            JOptionPane.showMessageDialog(this, "Navigating to upper floor");
+        }
 
-
-        }//fowler map
+        private void navigateFloorDown() {
+            // Implement logic for navigating down a floor
+            JOptionPane.showMessageDialog(this, "Navigating to lower floor");
+        }
     }
 
-    public Point2D scalePoints(Point2D a, double scaleFactor, double w0, double h0, BufferedImage mapImage){
+    public BufferedImage toBufferedImage(Image img, int width, int height, boolean hasAlpha) {
+        // Create a buffered image with transparency
+        int type = hasAlpha ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
+        BufferedImage bimage = new BufferedImage(width, height, type);
 
+        // Draw the image on to the buffered image
+        Graphics2D bGraphics = bimage.createGraphics();
+        bGraphics.drawImage(img, 0, 0, width, height, null);
+        bGraphics.dispose();
+
+        // Return the buffered image
+        return bimage;
+    }
+
+
+    public Point2D scalePoints(Point2D a, double scaleFactor, double w0, double h0, Image mapImage){
         Point2D b = new Point2D.Double();
-        int w = mapImage.getTileWidth();
-        int h = mapImage.getTileHeight();
+//        int w = mapImage.getWidth();
+//        int h = mapImage.getHeight();
 //        System.out.println("X: " + a.getX() + "W: " + w);
 //        System.out.println("Y: " + a.getY() + "H: " + h);
         b.setLocation((a.getX()*w0*scaleFactor), (a.getY()*h0*scaleFactor));
