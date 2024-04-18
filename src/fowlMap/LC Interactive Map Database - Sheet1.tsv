@@ -38,7 +38,7 @@
 252	Storage 252	13	2	Storage 252|252|	N/A	N/A
 253	Storage 253	13	2	Storage 253|253|	N/A	N/A
 254	The Mossy Log	13	2	The Mossy Log|254|Paper Article News	mossylog@lclark.edu	The Mossy Log publishes a website and weekly paper with campus news, opinion articles from students and faculty, and arts and culture listings for campus and the Portland metro area.
-255	Storage 255	13	2	Storage|255|	N/A	N/A
+255	Storage 255	13	2	Storage 255|255|	N/A	N/A
 258	Associated Student Body (ASB)	50	2	Associated Student Body (ASB)|258|Government	asb@lclark.edu	The Associated Student Body (ASB) is the undergraduate student government of Lewis & Clark College and plays a vital role in representing student interests and enhancing the overall campus experience.
 263	Amy Dvorak	17	2	Amy Dvorak|263|	adevorak@lclark.edu	Office of Amy Dvorak, Director of the Office of Sustainability.
 263	Sustainability Office	17	2	Sustainability Office|263|	adevorak@lclark.edu	The Sustainability Office and the Sustainability Council provide Lewis & Clark students with opportunities to learn, grow, and serve our community and region in an effort to build a more livable world.
@@ -55,9 +55,9 @@
 310	Stamm Dining Hall	93	3	Stamm Dining Hall|310|	events@lclark.edu	Stamm Dining Hall is often the home of large student events. With plenty of room for dining and dancing, this space features large windows and audiovisual capability.
 320	Andrea Salyer	84	3	Andrea Salyer|320|	andreasalyer@lclark.edu	Office of Andrea Salyer, Director of the Center for Social Change and Community Involvement
 321	Center for Social Change and Community Involement	85	3	Center for Social Change and Community Involement|321|	leadserve@lclark.edu	The Center for Social Change and Community Involvement offers a number of programs to prepare Lewis & Clark undergraduate students to engage impactfully, both locally and globally, in order to bring about active citizenship and social change.
-323	Erin Khong's Office	86	3	Erin Khong|323|	ekhong@lclark.edu	Office of the Assistant Director of Inclusion & Multicultural Engagement
-324	Joann Zhang's Office	86	3	Joann Zhang|324|	joannz@lclark.edu	Office of the Director of Inclusion and Multicultural Engagement
-325	Office of Inclusion and Multicultural Engagement	86	3	Office of Inclusion and Multicultural Engagement (IME)|325|	joannz@lclark.edu	The Office of Inclusion and Multicultural Engagement (IME) aims to support all students, especially those who identify as students of color, first-generation and/or LGBTQIA+ to achieve academic, social, personal, and professional success. We empower and support our students to be conscious, inclusive, and change agents for the future.
+323	Erin Khong's Office	86	3	Erin Khong's Office|323|	ekhong@lclark.edu	Office of the Assistant Director of Inclusion & Multicultural Engagement
+324	Joann Zhang's Office	86	3	Joann Zhang's Office|324|	joannz@lclark.edu	Office of the Director of Inclusion and Multicultural Engagement
+325	Office of Inclusion and Multicultural Engagement	86	3	Office of Inclusion and Multicultural Engagement|325|IME	joannz@lclark.edu	The Office of Inclusion and Multicultural Engagement (IME) aims to support all students, especially those who identify as students of color, first-generation and/or LGBTQIA+ to achieve academic, social, personal, and professional success. We empower and support our students to be conscious, inclusive, and change agents for the future.
 327	Quiet study space	86	3	Quiet study space|327|	N/A	Avaliable room for use unless booked
 350	Meeting Room 350	72	3	Meeting Room 350|350|Study	N/A	Avaliable room for use unless booked
 352	Meeting Room 352	73	3	Meeting Room 352|352|Study	N/A	Avaliable room for use unless booked
@@ -69,5 +69,5 @@
 	Trail Room	23	2	Trail Room||Troom	503-768-7000	The Trail Room provides delicious fries, pizza, and grab-and-go sandwiches or wraps, along with a full-service coffee bar featuring beans from Portland Coffee Roasters! 
 	Star Floor 1	56	1	Star Floor 1||Map	N/A	N/A
 	Star Floor 2	55	2	Star Floor 2||Map	N/A	N/A
-	Star Floor 3	87	3	Star Floor 3||Map	N/A	N/A
+	Star Floor 3	98	3	Star Floor 3||Map	N/A	N/A
 	Templeton Plaza	46	2	Templeton Plaza||Nielson Courtyard	N/A	Outdoor space on floor 2

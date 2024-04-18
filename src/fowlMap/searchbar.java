@@ -21,13 +21,15 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 public class searchbar implements ActionListener {
     String NODES_PATH = "src/fowlMap/official nodes - Sheet1.csv";
     String NAMES_PATH = "src/fowlMap/LC Interactive Map Database - Sheet1.tsv";
-    String[] IMAGE_PATHS = {"src/fowlMap/Fowler1_cropped.jpg", "src/fowlMap/Fowler2_cropped.jpg", "src/fowlMap/Fowler3_cropped.jpg"};
+    String[] IMAGE_PATHS = {"src/fowlMap/Fowler1_croppped.jpg", "src/fowlMap/Fowler2_cropped.jpg", "src/fowlMap/Fowler3_cropped.jpg"};
     //  building search bar
     static JTextField t0;
 
     Iterable<DirectedEdge> path;
 
     boolean directions = false;
+
+    Node destinationNode;
 
 
     //  building buttons
@@ -138,8 +140,10 @@ public class searchbar implements ActionListener {
         private JButton floor3Button;
         private JButton directionsButton;
         private int floorNumber;
+        private int startingFloor;
 
         HashMap<Integer, Node> nodes;
+
 
         public BufferedImage mapIn(int floorNumber){
             this.floorNumber = floorNumber;
@@ -231,9 +235,36 @@ public class searchbar implements ActionListener {
             } else if (e.getSource() == floor3Button) {
                 navigateFloor3();
             } else if (e.getSource() == directionsButton) {
-                directions = true;
-                MapPanel m = new MapPanel(floorNumber);
-                drawPath(path, m, floorNumber);
+                // Ask the user from which floor they want to start
+                Object[] options = {"Floor 1", "Floor 2", "Floor 3"};
+                String selectedFloor = (String) JOptionPane.showInputDialog(
+                        null,
+                        "Choose the starting floor:",
+                        "Select Floor",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        options,
+                        "Floor 1");
+
+                if (selectedFloor != null) {  // User made a choice and did not cancel the dialog
+                    directions = true;
+                    this.startingFloor = Integer.parseInt(selectedFloor.split(" ")[1]) - 1;
+                    makePath(startingFloor);
+                    floorNumber = startingFloor;
+                    MapPanel m = new MapPanel(floorNumber);
+                    drawPath(path, m, floorNumber);
+                } else {
+                    // Handle the case where user presses Cancel or closes the dialog
+                    System.out.println("No floor selected.");
+                }
+            }
+        }
+
+        private void makePath (int startingFloor) {
+            int[] startingNodes = new int[]{56, 55, 98};
+            path = Node.dijkstraSearch(nodes, startingNodes[startingFloor], destinationNode.nodeID);
+            for (DirectedEdge edge:path) {
+                System.out.println(edge.toString());
             }
 
         }
@@ -264,6 +295,7 @@ public class searchbar implements ActionListener {
             }
         }
     }
+
 
     public BufferedImage toBufferedImage(Image img, int width, int height, boolean hasAlpha) {
         // Create a buffered image with transparency
@@ -334,26 +366,23 @@ public class searchbar implements ActionListener {
         if (e.getSource() == b1){
             String locationSelected = b1.getText();
             MapPanel m = new MapPanel(floorNumber);
-            Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
+            destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
-            path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
-            for (DirectedEdge edge:path) {
-                System.out.println(edge.toString());
-            }
+
+//            for (DirectedEdge edge:path) {
+//                System.out.println(edge.toString());
+//            }
 //            drawPath(path, m, floorNumber);
         }
 
         if (e.getSource() == b2) {
             String locationSelected = b2.getText();
             MapPanel m = new MapPanel(floorNumber);
-            Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
+            destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
-            path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
-            for (DirectedEdge edge:path) {
-                System.out.println(edge.toString());
-            }
+
 //            drawPath(path, m, floorNumber);
 
         }
@@ -361,39 +390,30 @@ public class searchbar implements ActionListener {
         if (e.getSource() == b3) {
             String locationSelected = b3.getText();
             MapPanel m = new MapPanel(floorNumber);
-            Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
+            destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
-            path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
-            for (DirectedEdge edge:path) {
-                System.out.println(edge.toString());
-            }
+
 //            drawPath(path, m, floorNumber);
         }
 
         if (e.getSource() == b4) {
             String locationSelected = b4.getText();
             MapPanel m = new MapPanel(floorNumber);
-            Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
+            destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
-            path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
-            for (DirectedEdge edge:path) {
-                System.out.println(edge.toString());
-            }
+
 //            drawPath(path, m, floorNumber);
         }
 
         if (e.getSource() == b5) {
             String locationSelected = b5.getText();
             MapPanel m = new MapPanel(floorNumber);
-            Node n = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            Point2D a = scalePoints(n.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
+            destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
-            path = Node.dijkstraSearch(m.nodes, 11, n.nodeID);
-            for (DirectedEdge edge:path) {
-                System.out.println(edge.toString());
-            }
+
 //            drawPath(path, m, floorNumber);
         }
 
