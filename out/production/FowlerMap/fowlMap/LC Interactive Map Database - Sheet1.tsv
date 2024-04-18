@@ -1,4 +1,4 @@
-110	Heath Promotion and Wellness	57	1	Heath Promotion and Wellness|110|Doctor	503-768-8225	The Office of Health Promotion and Wellness at Lewis & Clark College is dedicated to a holistic approach to supporting the needs of students in their pursuit of creating and maintaining healthy, well-balanced lifestyles.
+110	Health Promotion and Wellness	57	1	Heath Promotion and Wellness|110|Doctor	503-768-8225	The Office of Health Promotion and Wellness at Lewis & Clark College is dedicated to a holistic approach to supporting the needs of students in their pursuit of creating and maintaining healthy, well-balanced lifestyles.
 117	Men's Bathroom 1A	59	1	Men's Bathroom 1A|117|Loo Water closet rest room	N/A	N/A
 118	Women's Bathroom 1A	60	1	Women's Bathroom 1A|118|Loo Water closet rest room	N/A	N/A
 120	Financial Aid	62	1	Financial Aid|120|	503-768-7090	The Financial Aid Office is located on the lower level of Fowler Student Center. To schedule an appointment, please email fao@lclark.edu or email your financial aid counselor.
@@ -13,16 +13,16 @@
 225	Meeting Room 225	23	2	Meeting Room 225|225|Study	N/A	Avaliable room for use unless booked
 229	Staff Kitchen	17	2	Staff Kitchen|229|	N/A	Kitchen for faculty use only
 231	Bon Appetit Office	47	2	Bon Appetit Office|231|Chef 	bonadvisory@lclark.edu	Office of the Bon Appétit Administration
-232	Women's Bathroom 2B	16	2	Men's Bathroom 2B|232|Loo Water closet rest room	N/A	N/A
-234	Men's Bathroom 2B	17	2	Women's Bathroom 2B|234|Loo Water closet rest room	N/A	N/A
+232	Men's Bathroom 2B	15	2	Men's Bathroom 2B|232|Loo Water closet rest room	N/A	N/A
+234	Women's Bathroom 2B	17	2	Women's Bathroom 2B|234|Loo Water closet rest room	N/A	N/A
 235	NSPM Room	49	2	NSPM Room|235|New Student Peer Mentors program	nspm@lclark.edu	Home to the New Student Peer Mentors program
 237	Meeting Room 237	45	2	Meeting Room 237|237|Study	N/A	Avaliable room for use unless booked
 238	Meeting Room 238	45	2	Meeting Room 238|238|Study	N/A	Avaliable room for use unless booked
-239	College Outdoor	42	2	College Outdoor|239|camping boating hiking trips 	outdoors@lclark.edu	College Outdoors provides the Lewis & Clark College community with access to the spectacular outdoor environments of the Pacific Northwest through a variety of activities including hiking, mushroom-hunting, cross-country skiing, backpacking, whitewater rafting, kayaking, and nature meditation.
-240	Tamara Ko's Office	39	2	Tamara Ko|240|	tko@lclark.edu	Office of the Director of Student Engagement and Special Events
+239	College Outdoors	42	2	College Outdoor|239|camping boating hiking trips 	outdoors@lclark.edu	College Outdoors provides the Lewis & Clark College community with access to the spectacular outdoor environments of the Pacific Northwest through a variety of activities including hiking, mushroom-hunting, cross-country skiing, backpacking, whitewater rafting, kayaking, and nature meditation.
+240	Tamara Ko's Office	39	2	Tamara Ko's Office|240|	tko@lclark.edu	Office of the Director of Student Engagement and Special Events
 241	Campus Activities Board (CAB)	43	2	Campus Activities Board (CAB)|241|	caboard@lclark.edu	Lewis & Clark’s Campus Activities Board (CAB) is a diverse group of dedicated students that strive to program fun, safe and social events for the Lewis & Clark community.
 242	Black Student Union (BSU)	44	2	Black Student Union (BSU)|242|	bsu@lclark.edu	The Black Student Union aims to create an accountable and safe space for people of color on campus, as well as allies.
-243	International Students and Scholars	54	2	International Students and Scholars (ISS)|243|	iso@lclark.edu	ISS offers a wide variety of support programs for the 200+ international students on campus, responsible for international student admissions, financial aid, orientation, and immigration services.
+243	International Students and Scholars (ISS)	54	2	International Students and Scholars (ISS)|243|	iso@lclark.edu	ISS offers a wide variety of support programs for the 200+ international students on campus, responsible for international student admissions, financial aid, orientation, and immigration services.
 244	Student Activities Room	5	2	Student Activities Room|244|	503-768-7121	Reach out to Student Engagement if you have ideas for what they should do with this space!
 245	Hawaii Club	2	2	Hawaii Club|245|	hc@lclark.edu	The Hawai`i Club serves as a resource of those in the L&C community wanting to learn about Hawai`i and its unique customs and cultures.
 245	Asian Student Union (ASU)	2	2	Asian Student Union (ASU)|245|	asu@lclark.edu	The overarching mission of our organization is to provide a safe space and community for our members.
@@ -38,7 +38,7 @@
 252	Storage 252	13	2	Storage 252|252|	N/A	N/A
 253	Storage 253	13	2	Storage 253|253|	N/A	N/A
 254	The Mossy Log	13	2	The Mossy Log|254|Paper Article News	mossylog@lclark.edu	The Mossy Log publishes a website and weekly paper with campus news, opinion articles from students and faculty, and arts and culture listings for campus and the Portland metro area.
-255	Storage	13	2	Storage|255|	N/A	N/A
+255	Storage 255	13	2	Storage|255|	N/A	N/A
 258	Associated Student Body (ASB)	50	2	Associated Student Body (ASB)|258|Government	asb@lclark.edu	The Associated Student Body (ASB) is the undergraduate student government of Lewis & Clark College and plays a vital role in representing student interests and enhancing the overall campus experience.
 263	Amy Dvorak	17	2	Amy Dvorak|263|	adevorak@lclark.edu	Office of Amy Dvorak, Director of the Office of Sustainability.
 263	Sustainability Office	17	2	Sustainability Office|263|	adevorak@lclark.edu	The Sustainability Office and the Sustainability Council provide Lewis & Clark students with opportunities to learn, grow, and serve our community and region in an effort to build a more livable world.
