@@ -140,6 +140,7 @@ public class searchbar implements ActionListener {
         private JButton floor3Button;
         private JButton directionsButton;
         private int floorNumber;
+        public String query;
         private int startingFloor;
 
         HashMap<Integer, Node> nodes;
@@ -227,7 +228,7 @@ public class searchbar implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == descriptionButton) {
-                showRoomDescription();
+                showRoomDescription(this.query);
             } else if (e.getSource() == floor1Button) {
                 navigateFloor1();
             } else if (e.getSource() == floor2Button) {
@@ -248,7 +249,7 @@ public class searchbar implements ActionListener {
 
                 if (selectedFloor != null) {  // User made a choice and did not cancel the dialog
                     directions = true;
-                    this.startingFloor = Integer.parseInt(selectedFloor.split(" ")[1]) - 1;
+                    this.startingFloor = Integer.parseInt(selectedFloor.split(" ")[1])-1 ;
                     makePath(startingFloor);
                     floorNumber = startingFloor;
                     MapPanel m = new MapPanel(floorNumber);
@@ -269,10 +270,12 @@ public class searchbar implements ActionListener {
 
         }
 
-        private void showRoomDescription() {
+        private void showRoomDescription(String locationSelected) {
             // Implement the logic to show room descriptions
-            String roomDescription = "hi";
-            JOptionPane.showMessageDialog(this, "Room Description Here");
+            Location.Room room = search.searchRoom(locationSelected, NAMES_PATH);
+            String roomDescription = room.getDescription() ;
+
+            JOptionPane.showMessageDialog(this, roomDescription);
         }
 
         private void navigateFloor1() {
@@ -344,7 +347,7 @@ public class searchbar implements ActionListener {
         String s1 = t0.getText();
         ArrayList<String> results = new ArrayList<String>();
         results = search.search(s1, NAMES_PATH);
-        int floorNumber = 1;
+        int floorNumber;
 
         //if we click the search button
         if (e.getSource() == submitButton) {
@@ -365,8 +368,10 @@ public class searchbar implements ActionListener {
 
         if (e.getSource() == b1){
             String locationSelected = b1.getText();
-            MapPanel m = new MapPanel(floorNumber);
             destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            floorNumber = search.getFloorNumberByNodeId(destinationNode.nodeID, NODES_PATH)-1;
+            MapPanel m = new MapPanel(floorNumber);
+            m.query = locationSelected;
             Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
 
@@ -378,8 +383,11 @@ public class searchbar implements ActionListener {
 
         if (e.getSource() == b2) {
             String locationSelected = b2.getText();
-            MapPanel m = new MapPanel(floorNumber);
+
             destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            floorNumber = search.getFloorNumberByNodeId(destinationNode.nodeID, NODES_PATH)-1;
+            MapPanel m = new MapPanel(floorNumber);
+            m.query = locationSelected;
             Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
 
@@ -389,8 +397,10 @@ public class searchbar implements ActionListener {
 
         if (e.getSource() == b3) {
             String locationSelected = b3.getText();
-            MapPanel m = new MapPanel(floorNumber);
             destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            floorNumber = search.getFloorNumberByNodeId(destinationNode.nodeID, NODES_PATH)-1;
+            MapPanel m = new MapPanel(floorNumber);
+            m.query = locationSelected;
             Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
 
@@ -399,21 +409,23 @@ public class searchbar implements ActionListener {
 
         if (e.getSource() == b4) {
             String locationSelected = b4.getText();
-            MapPanel m = new MapPanel(floorNumber);
             destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            floorNumber = search.getFloorNumberByNodeId(destinationNode.nodeID, NODES_PATH)-1;
+            MapPanel m = new MapPanel(floorNumber);
+            m.query = locationSelected;
             Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
-
 //            drawPath(path, m, floorNumber);
         }
 
         if (e.getSource() == b5) {
             String locationSelected = b5.getText();
-            MapPanel m = new MapPanel(floorNumber);
             destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+            floorNumber = search.getFloorNumberByNodeId(destinationNode.nodeID, NODES_PATH)-1;
+            MapPanel m = new MapPanel(floorNumber);
+            m.query = locationSelected;
             Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
             drawIcon(a, m.mapImage);
-
 //            drawPath(path, m, floorNumber);
         }
 

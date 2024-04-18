@@ -47,12 +47,21 @@ public class Location {
         private String roomNumber;
         private int floorNumber ;
         private int nodeID;
+        public String description;
 
         public Room(String name, String roomNumber, int floorNumber, int nodeID){
             this.name = name;
             this.roomNumber = roomNumber;
             this.floorNumber = floorNumber;
             this.nodeID = nodeID;
+        }
+
+        public void addDescription(String description){
+            this.description = description;
+        }
+
+        public String getDescription(){
+            return this.description;
         }
 
         public String getName() { return name; }
