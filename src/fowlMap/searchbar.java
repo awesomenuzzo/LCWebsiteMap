@@ -21,11 +21,13 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 public class searchbar implements ActionListener {
     String NODES_PATH = "src/fowlMap/official nodes - Sheet1.csv";
     String NAMES_PATH = "src/fowlMap/LC Interactive Map Database - Sheet1.tsv";
-    String[] IMAGE_PATHS = {"", "src/fowlMap/Fowler2_cropped.jpg", "src/fowlMap/Fowler3_cropped.jpg"};
+    String[] IMAGE_PATHS = {"src/fowlMap/Fowler1_cropped.jpg", "src/fowlMap/Fowler2_cropped.jpg", "src/fowlMap/Fowler3_cropped.jpg"};
     //  building search bar
     static JTextField t0;
 
     Iterable<DirectedEdge> path;
+
+    boolean directions = false;
 
 
     //  building buttons
@@ -126,7 +128,6 @@ public class searchbar implements ActionListener {
     }
 
     public class MapPanel extends JFrame implements ActionListener {
-
         public BufferedImage mapImage;
         double scaleFactor;
         double w0;
@@ -135,10 +136,13 @@ public class searchbar implements ActionListener {
         private JButton floor1Button;
         private JButton floor2Button;
         private JButton floor3Button;
+        private JButton directionsButton;
+        private int floorNumber;
 
         HashMap<Integer, Node> nodes;
 
         public BufferedImage mapIn(int floorNumber){
+            this.floorNumber = floorNumber;
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             int maxWidth = (int) (screenSize.getWidth() * 0.8); // 80% of screen width
             int maxHeight = (int) (screenSize.getHeight() * 0.9);
@@ -198,13 +202,17 @@ public class searchbar implements ActionListener {
             floor3Button.addActionListener(this);
             floor3Button.setFont(new Font("Sans Serif", Font.PLAIN, 16));
 
+            directionsButton = new JButton("Get Directions");
+            directionsButton.addActionListener(this);
+            directionsButton.setFont(new Font("Sans Serif", Font.PLAIN, 16));
+
 
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
             buttonPanel.add(descriptionButton);
             buttonPanel.add(floor1Button);
             buttonPanel.add(floor2Button);
             buttonPanel.add(floor3Button);
-
+            buttonPanel.add(directionsButton);
 
             this.add(mapPanel, BorderLayout.CENTER); // Add map panel to the center of the frame
             this.add(buttonPanel, BorderLayout.NORTH); // Add button panel to the top (north) of the frame
@@ -222,9 +230,13 @@ public class searchbar implements ActionListener {
                 navigateFloor2();
             } else if (e.getSource() == floor3Button) {
                 navigateFloor3();
+            } else if (e.getSource() == directionsButton) {
+                directions = true;
+                MapPanel m = new MapPanel(floorNumber);
+                drawPath(path, m, floorNumber);
             }
 
-    }
+        }
 
         private void showRoomDescription() {
             // Implement the logic to show room descriptions
@@ -234,16 +246,22 @@ public class searchbar implements ActionListener {
 
         private void navigateFloor1() {
             MapPanel m = new MapPanel(0);
-            drawPath(path, m, 0);
+            if (directions) {
+                drawPath(path, m, 0);
+            }
         }
 
         private void navigateFloor2() {
             MapPanel m = new MapPanel(1);
-            drawPath(path, m, 1);
+            if (directions) {
+                drawPath(path, m, 1);
+            }
         }
         private void navigateFloor3() {
             MapPanel m = new MapPanel(2);
-            drawPath(path, m, 2);
+            if (directions) {
+                drawPath(path, m, 2);
+            }
         }
     }
 
@@ -323,7 +341,7 @@ public class searchbar implements ActionListener {
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
-            drawPath(path, m, floorNumber);
+//            drawPath(path, m, floorNumber);
         }
 
         if (e.getSource() == b2) {
@@ -336,7 +354,7 @@ public class searchbar implements ActionListener {
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
-            drawPath(path, m, floorNumber);
+//            drawPath(path, m, floorNumber);
 
         }
 
@@ -350,7 +368,7 @@ public class searchbar implements ActionListener {
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
-            drawPath(path, m, floorNumber);
+//            drawPath(path, m, floorNumber);
         }
 
         if (e.getSource() == b4) {
@@ -363,7 +381,7 @@ public class searchbar implements ActionListener {
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
-            drawPath(path, m, floorNumber);
+//            drawPath(path, m, floorNumber);
         }
 
         if (e.getSource() == b5) {
@@ -376,7 +394,7 @@ public class searchbar implements ActionListener {
             for (DirectedEdge edge:path) {
                 System.out.println(edge.toString());
             }
-            drawPath(path, m, floorNumber);
+//            drawPath(path, m, floorNumber);
         }
 
     }
