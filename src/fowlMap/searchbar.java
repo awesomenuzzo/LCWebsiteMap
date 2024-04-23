@@ -41,7 +41,7 @@ public class searchbar implements ActionListener {
         frame.setLayout(null);
 
         // Adjusting the size of the window
-        frame.setSize(1366, 768); // Set to a typical tablet/laptop size
+        frame.setSize(875, 768); // Set to a typical tablet/laptop size
 
         // Title Label with adjusted bounds for the larger size
         JLabel titleLabel = new JLabel("L&C Fowler Student Center Map");
