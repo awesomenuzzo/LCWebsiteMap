@@ -275,7 +275,21 @@ public class searchbar implements ActionListener {
             Location.Room room = search.searchRoom(locationSelected, NAMES_PATH);
             String roomDescription = room.getDescription() ;
 
-            JOptionPane.showMessageDialog(this, roomDescription);
+            // Creating a JTextArea
+            JTextArea textArea = new JTextArea(6, 25); // Adjust size as needed
+            textArea.setText(roomDescription);
+            textArea.setWrapStyleWord(true);
+            textArea.setLineWrap(true);
+            textArea.setEditable(false);
+            textArea.setOpaque(false);
+
+            // Adding JTextArea to JScrollPane
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setBorder(null);
+
+            // Displaying in JOptionPane
+            JOptionPane.showMessageDialog(this, scrollPane, "Room Description", JOptionPane.INFORMATION_MESSAGE);
+
         }
 
         private void navigateFloor1() {
