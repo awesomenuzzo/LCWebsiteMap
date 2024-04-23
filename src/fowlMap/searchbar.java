@@ -335,19 +335,28 @@ public class searchbar implements ActionListener {
             Point2D p2 = scalePoints(n2.getPosition(), m.scaleFactor, m.w0, m.h0, m.mapImage);
 //            g2.setStroke(new BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setStroke(new BasicStroke(6));
-            if (search.getFloorNumberByNodeId(e.to(), NODES_PATH) == floor + 1 && search.getFloorNumberByNodeId(e.from(), NODES_PATH) == floor + 1) {
+            if (n2.floor == floor && n1.floor == floor) {
                 g2.drawLine((int) Math.round(p1.getX()), (int) Math.round(p1.getY()), (int) Math.round(p2.getX()), (int) Math.round(p2.getY()));
             }
 //            g2.drawLine((int) Math.round(p1.getX()), (int) Math.round(p1.getY()), (int) Math.round(p2.getX()), (int) Math.round(p2.getY()));
         }
     }
+    public void selectQuery(String locationSelected){
+        int floorNumber;
+        destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+        floorNumber = destinationNode.floor;
+        MapPanel m = new MapPanel(floorNumber);
+        m.query = locationSelected;
+        Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
+        drawIcon(a, m.mapImage);
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String s1 = t0.getText();
         ArrayList<String> results = new ArrayList<String>();
         results = search.search(s1, NAMES_PATH);
-        int floorNumber;
 
         //if we click the search button
         if (e.getSource() == submitButton) {
@@ -368,12 +377,7 @@ public class searchbar implements ActionListener {
 
         if (e.getSource() == b1){
             String locationSelected = b1.getText();
-            destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            floorNumber = search.getFloorNumberByNodeId(destinationNode.nodeID, NODES_PATH)-1;
-            MapPanel m = new MapPanel(floorNumber);
-            m.query = locationSelected;
-            Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
-            drawIcon(a, m.mapImage);
+            selectQuery(locationSelected);
 
 //            for (DirectedEdge edge:path) {
 //                System.out.println(edge.toString());
@@ -383,13 +387,7 @@ public class searchbar implements ActionListener {
 
         if (e.getSource() == b2) {
             String locationSelected = b2.getText();
-
-            destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            floorNumber = search.getFloorNumberByNodeId(destinationNode.nodeID, NODES_PATH)-1;
-            MapPanel m = new MapPanel(floorNumber);
-            m.query = locationSelected;
-            Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
-            drawIcon(a, m.mapImage);
+            selectQuery(locationSelected);
 
 //            drawPath(path, m, floorNumber);
 
@@ -397,36 +395,22 @@ public class searchbar implements ActionListener {
 
         if (e.getSource() == b3) {
             String locationSelected = b3.getText();
-            destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            floorNumber = search.getFloorNumberByNodeId(destinationNode.nodeID, NODES_PATH)-1;
-            MapPanel m = new MapPanel(floorNumber);
-            m.query = locationSelected;
-            Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
-            drawIcon(a, m.mapImage);
+            selectQuery(locationSelected);
+
 
 //            drawPath(path, m, floorNumber);
         }
 
         if (e.getSource() == b4) {
             String locationSelected = b4.getText();
-            destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            floorNumber = search.getFloorNumberByNodeId(destinationNode.nodeID, NODES_PATH)-1;
-            MapPanel m = new MapPanel(floorNumber);
-            m.query = locationSelected;
-            Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
-            drawIcon(a, m.mapImage);
-//            drawPath(path, m, floorNumber);
+            selectQuery(locationSelected);
+
         }
 
         if (e.getSource() == b5) {
             String locationSelected = b5.getText();
-            destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
-            floorNumber = search.getFloorNumberByNodeId(destinationNode.nodeID, NODES_PATH)-1;
-            MapPanel m = new MapPanel(floorNumber);
-            m.query = locationSelected;
-            Point2D a = scalePoints(destinationNode.position, m.scaleFactor, m.w0, m.h0, m.mapImage);
-            drawIcon(a, m.mapImage);
-//            drawPath(path, m, floorNumber);
+            selectQuery(locationSelected);
+
         }
 
     }
