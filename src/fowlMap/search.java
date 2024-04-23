@@ -32,6 +32,7 @@ public class search {
                 String[] list = row[4].split("\\|");
 
                 Location.Room room = new Location.Room(row[1], row[0], Integer.parseInt(row[3]), Integer.parseInt(row[2]));
+                room.addDescription(row[6]);
 //                System.out.println(room.getRoomNumber());
                 for (String s: list) {
                     s = s.toLowerCase(Locale.ROOT);
@@ -94,8 +95,8 @@ public class search {
     }
 
     public static ArrayList<String> search(String query, String filePath){
-        HashMap<String, Location.Room> dict = fileIn(filePath);
-        TrieSET data = load_data(dict);
+        HashMap<String, Location.Room> dict = RoomCache.fetchDict(filePath);
+        TrieSET data = TrieFactory.fetchTrie(dict);
         query = query.toLowerCase();
         Iterable<String> prefixes = data.keysWithPrefix(query);
         ArrayList<String> array_prefixes = transformIterable(prefixes);
@@ -137,11 +138,19 @@ public class search {
     }
 
     public static Node searchNode(String name, String fileName, String nodesFileName){
-        HashMap<String, Location.Room> dict = fileIn(fileName);
+        HashMap<String, Location.Room> dict = RoomCache.fetchDict((fileName));
         Location.Room l = dict.get(name.toLowerCase(Locale.ROOT));
         NodeCache.makeNodes(nodesFileName);
         return NodeCache.findNode(l.getNodeID());
     }
+
+    public static Location.Room searchRoom(String name, String fileName){
+        HashMap<String, Location.Room> dict = RoomCache.fetchDict((fileName));
+        Location.Room l = dict.get(name.toLowerCase(Locale.ROOT));
+        return l;
+    }
+
+
 
     public static Integer getFloorNumber(int query, String filePath){
         HashMap<String, Location.Room> dict = RoomCache.fetchDict(filePath);

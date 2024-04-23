@@ -21,6 +21,7 @@ public class Node {
     HashMap<Node, Double> weights;
     ArrayList<DirectedEdge> edges;
 
+
     Node(int nodeID, double x, double y){
         this.nodeID = nodeID;
         this.position = new Point2D.Double();
