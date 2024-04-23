@@ -181,13 +181,13 @@ public class searchbar implements ActionListener {
         public MapPanel(int floorNumber) {
             JPanel mapPanel = new JPanel();
             this.setTitle("Map Frame");
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setLayout(new BorderLayout()); // Set the JFrame layout
 
             mapPanel.setLayout(new BorderLayout()); // Use BorderLayout for the map panel
 
             mapImage = mapIn(floorNumber);
-            nodes = Node.generateNodes(NODES_PATH);
+            nodes = search.NodeCache.getNodes(NODES_PATH);
             JLabel mapLabel = new JLabel(new ImageIcon(mapImage));
             mapPanel.add(mapLabel, BorderLayout.CENTER); // Add the map label to the center
 
