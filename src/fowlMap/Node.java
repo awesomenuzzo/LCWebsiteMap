@@ -36,9 +36,6 @@ public class Node {
     public String toStringAll(){
         return "NodeId: " + this.nodeID + " X: " + this.position.getX() + " Y: " + this.position.getY();
     }
-    public int getNodeID(){
-        return this.nodeID;
-    }
 
 
     public void addNeighbor(Node neighborNode){
@@ -137,18 +134,11 @@ public class Node {
 
     }
 
-    public static DijkstraSP getDijkstra(EdgeWeightedDigraph G, int start){
-        Map<Integer, DijkstraSP> cache = new HashMap<>();
-        if(cache.containsKey(start)){
-            return cache.get(start);
-        }else{
-            return new DijkstraSP(G, start);
-        }
-    }
 
     public static Iterable<DirectedEdge> dijkstraSearch(HashMap<Integer, Node> nodes, int start, int end){
-        EdgeWeightedDigraph G = generateGraph(nodes);
-        DijkstraSP d = new DijkstraSP(G, start);
+        search.NodeCache.getGraph();
+
+        DijkstraSP d = search.NodeCache.getDijkstra(start);
 //        if(d.hasPathTo(end)){
             return d.pathTo(end);
 //        }
@@ -158,24 +148,6 @@ public class Node {
     public static void main(String[] args) {
         HashMap<Integer, Node> nodes = generateNodes("src/fowlMap/officialnodes.csv");
         EdgeWeightedDigraph graph = generateGraph(nodes);
-//        Iterable<DirectedEdge> d = dijkstraSearch(graph, 14, 34);
-//        System.out.println(d.toString());
-
-//        for (Map.Entry<Integer, Node> entry: nodes.entrySet()){
-//            Node n = entry.getValue();
-//            n.addWeights();
-//            for (Map.Entry<Node, Double> w :entry.getValue().weights.entrySet()) {
 //
-//                System.out.println("Node : "+ n.getNodeID() + " Neighbor: "+ w.getKey().getNodeID() + " Weight: " + w.getValue());
-//            }
-//
-//        }
-
-
-//            System.out.println(entry.getKey());
-//            System.out.println(entry.getValue().toString());
-//
-//
-//        }
     }
 }

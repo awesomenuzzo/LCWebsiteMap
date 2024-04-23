@@ -130,17 +130,48 @@ public class search {
 
     public static class NodeCache {
         public static HashMap<Integer, Node> nodes;
+        public static EdgeWeightedDigraph graph;
+        public static HashMap<Integer, DijkstraSP> dijkstra = new HashMap<>();
         public static void makeNodes(String nodesFileName){ nodes = Node.generateNodes(nodesFileName);}
         public static Node findNode(int nodeID) {
             return nodes.get(nodeID);
         }
+        public static HashMap<Integer, Node> getNodes(String nodesFileName){
+            if(nodes==null){
+                makeNodes(nodesFileName);
+            }
+            return nodes;
+        }
+        public static void makeGraph(){graph = Node.generateGraph(nodes);}
+        public static EdgeWeightedDigraph getGraph(){
+            if(graph == null){
+                makeGraph();
+            }
+            return graph;
+        }
+
+        public static void makeDijkstra(int point){
+            dijkstra.put(point, new DijkstraSP(graph,point));
+            System.out.println("I'm making a new dijkstra something");
+
+        }
+        public static DijkstraSP getDijkstra(int point){//node-id for starting point
+            if(dijkstra==null){
+                makeDijkstra(point);
+            }
+            if(!dijkstra.containsKey(point)){
+                makeDijkstra(point);
+            }
+            return dijkstra.get(point);
+        }
 
     }
+
 
     public static Node searchNode(String name, String fileName, String nodesFileName){
         HashMap<String, Location.Room> dict = RoomCache.fetchDict((fileName));
         Location.Room l = dict.get(name.toLowerCase(Locale.ROOT));
-        NodeCache.makeNodes(nodesFileName);
+        NodeCache.getNodes(nodesFileName);
         return NodeCache.findNode(l.getNodeID());
     }
 
@@ -158,22 +189,7 @@ public class search {
     }
 
 
-    public static Integer getFloorNumberByNodeId(int nodeId, String filePath) {
-        HashMap<Integer, Integer> nodeToFloor = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                int currentNodeId = Integer.parseInt(values[0]);  // Node ID is in the first column
-                int floorNumber = Integer.parseInt(values[4]);   // Floor number is in the fifth column
-                nodeToFloor.put(currentNodeId, floorNumber);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null; // Handle exceptions or invalid file path
-        }
-        return nodeToFloor.get(nodeId);
-    }
+
 
     //test with pre-existing string
     public static void main(String[] args){
