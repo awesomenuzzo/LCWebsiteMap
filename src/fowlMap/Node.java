@@ -20,14 +20,17 @@ public class Node {
     ArrayList<Node> neighbors;
     HashMap<Node, Double> weights;
     ArrayList<DirectedEdge> edges;
+    int floor;
 
 
-    Node(int nodeID, double x, double y){
+    Node(int nodeID, double x, double y, int floor){
         this.nodeID = nodeID;
         this.position = new Point2D.Double();
         this.position.setLocation(x,y);
         this.neighbors = new ArrayList<Node>();
         this.weights = new HashMap<>();
+        this.floor = floor;
+
     }
 
     public String toStringAll(){
@@ -84,7 +87,7 @@ public class Node {
             while ((line = br.readLine()) != null)   //returns a Boolean value
             {
                 String[] row = line.split(splitBy);
-                Node n = new Node(Integer.parseInt(row[0]), Double.parseDouble(row[1]), Double.parseDouble(row[2]));
+                Node n = new Node(Integer.parseInt(row[0]), Double.parseDouble(row[1]), Double.parseDouble(row[2]), Integer.parseInt(row[4])-1);
                 if(!nodes.containsKey(n.nodeID)){
                     nodes.put(n.nodeID, n);
                 }
