@@ -30,10 +30,12 @@ public class searchbar implements ActionListener {
     boolean directions = false;
 
     Node destinationNode;
+    private String destinationNodeName;
 
 
     //  building buttons
     JButton submitButton;JButton b1;JButton b2;JButton b3;JButton b4;JButton b5;
+
     searchbar() {
         JFrame frame = new JFrame("Enhanced Search Interface"); // Title of the window
         frame.setLayout(null);
@@ -228,7 +230,7 @@ public class searchbar implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == descriptionButton) {
-                showRoomDescription(this.query);
+                showRoomDescription();
             } else if (e.getSource() == floor1Button) {
                 navigateFloor1();
             } else if (e.getSource() == floor2Button) {
@@ -270,12 +272,26 @@ public class searchbar implements ActionListener {
 
         }
 
-        private void showRoomDescription(String locationSelected) {
+        private void showRoomDescription() {
             // Implement the logic to show room descriptions
-            Location.Room room = search.searchRoom(locationSelected, NAMES_PATH);
+            Location.Room room = search.searchRoom(destinationNodeName, NAMES_PATH);
             String roomDescription = room.getDescription() ;
 
-            JOptionPane.showMessageDialog(this, roomDescription);
+            // Creating a JTextArea
+            JTextArea textArea = new JTextArea(6, 25); // Adjust size as needed
+            textArea.setText(roomDescription);
+            textArea.setWrapStyleWord(true);
+            textArea.setLineWrap(true);
+            textArea.setEditable(false);
+            textArea.setOpaque(false);
+
+            // Adding JTextArea to JScrollPane
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setBorder(null);
+
+            // Displaying in JOptionPane
+            JOptionPane.showMessageDialog(this, scrollPane, "Room Description", JOptionPane.INFORMATION_MESSAGE);
+
         }
 
         private void navigateFloor1() {
@@ -344,6 +360,7 @@ public class searchbar implements ActionListener {
     public void selectQuery(String locationSelected){
         int floorNumber;
         destinationNode = search.searchNode(locationSelected , NAMES_PATH, NODES_PATH);
+        destinationNodeName = locationSelected;
         floorNumber = destinationNode.floor;
         MapPanel m = new MapPanel(floorNumber);
         m.query = locationSelected;
